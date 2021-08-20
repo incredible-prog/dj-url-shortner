@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.css' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Url Shortener</title>
+
+</head>
+
+<body class="container mt-5" style="font-family:monospace;">
+
+<script>
+  function Copy() {
+  var copyText = document.getElementById('link');
+  copyText.select();
+  document.execCommand('copy')
+  document.right('copied text')
+}
+</script>
+
+<center>
+    <h1><a href="/" style="text-decoration:none; color:black;">Url Shortener</a></h1>
+    <form action="{% url 'generate' %}" method="get">
+        Url: <input type="text" required name="link" placeholder="Paste your url here">
+        <button type="submit" class="btn btn-outline-success">GENERATE</button>
+    </form>
+    {% if request.path == '/generate/' %}
+    <p class="mt-4">{% if msg %}{{ msg }}{% else %} Your link has been generated successfully.{% endif %} </p>
+    <p><input type="text" id="link" value="dj-url-shortner.herokuapp.com/{{ link }}">
+        <button onclick="Copy()" class="btn btn-outline-secondary">
+            COPY
+        </button>
+        {% if msg %}<a class="btn btn-outline-info" href="{% url 'go' link %}" target="_blank">VERIFY</a>{% endif %}
+    </p>
+    {% endif %}
+
+</center>
+
+
+</body>
+</html>
